@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Día del Hombre · Dedicatoria</title>
+  <!-- Fuentes tipográficas cálidas y legibles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Fraunces"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            skyWarmBg: '#EAF6FC',
+            skyMist: '#D5ECF8',
+            warmCream: '#FDFBF7',
+            deepNavy: '#16324F',
+            slateInk: '#395672',
+            skyAccent: '#2B8CBE',
+            skyAccentHover: '#20729D',
+            warmAmber: '#D98A2B',
+            warmAmberSoft: '#FDF1DE',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Paleta celeste cálido luminoso con matices crema/marfil acogedores */
+    body {
+      background: linear-gradient(145deg, #E2F3FC 0%, #F4F9FC 48%, #FDF7EC 100%);
+      color: #16324F;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .story-shell {
+      background: linear-gradient(165deg, rgba(255, 253, 249, 0.92) 0%, rgba(244, 250, 254, 0.95) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(125, 189, 224, 0.42);
+      box-shadow:
+        0 24px 60px -15px rgba(22, 50, 79, 0.14),
+        0 0 36px -10px rgba(43, 140, 190, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) translateX(0) scale(0.75);
+        opacity: 0;
+      }
+      18% {
+        opacity: 0.55;
+      }
+      50% {
+        transform: translateY(50vh) translateX(14px) scale(1);
+        opacity: 0.45;
+      }
+      85% {
+        opacity: 0.22;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(-12px) scale(0.85);
+        opacity: 0;
+      }
+    }
+
+    @keyframes sceneFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .particle-dot {
+      position: fixed;
+      bottom: -30px;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp linear infinite;
+      user-select: none;
+    }
+
+    .scene-enter {
+      animation: sceneFadeIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-skyAccent/20 selection:text-deepNavy">
+  <!-- Partículas flotantes suaves de fondo -->
+  <div id="particles-layer" aria-hidden="true"></div>
+
+  <!-- Contenedor principal -->
+  <main class="relative z-10 w-full min-h-screen flex flex-col items-center justify-center px-3 py-5 sm:px-6 sm:py-8">
+    <section
+      aria-label="Tarjeta animada por el Día del Hombre"
+      class="story-shell w-full max-w-xl rounded-3xl p-4 sm:p-7 md:p-8 transition-all duration-300"
+    >
+      <!-- Encabezado superior -->
+      <div class="flex flex-wrap items-center justify-between gap-2.5 pb-4 border-b border-skyAccent/20">
+        <div class="inline-flex items-center gap-2 bg-skyWarmBg text-deepNavy px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium border border-skyAccent/30">
+          <span aria-hidden="true">🌤️</span>
+          <span>Día del Hombre · Dedicatoria</span>
+        </div>
+
+        <button
+          type="button"
+          id="btn-toggle-customize"
+          onclick="toggleCustomizePanel()"
+          aria-expanded="false"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-warmCream hover:bg-skyWarmBg text-deepNavy border border-skyAccent/30 transition cursor-pointer shadow-xs"
+        >
+          <span aria-hidden="true">✎</span>
+          <span id="customize-btn-label">Personalizar nombres</span>
+        </button>
+      </div>
+
+      <!-- Panel desplegable para personalizar nombres -->
+      <div
+        id="customize-panel"
+        class="hidden mt-4 rounded-2xl bg-skyWarmBg/85 border border-skyAccent/25 p-4 sm:p-5 space-y-4"
+      >
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-skyAccentHover">
+            Personaliza los nombres
+          </h2>
+          <button
+            type="button"
+            onclick="resetNames()"
+            class="text-xs text-slateInk hover:text-deepNavy underline underline-offset-4 cursor-pointer"
+          >
+            Restablecer
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="input-recipient" class="block text-[11px] font-medium uppercase tracking-wider text-slateInk mb-1">
+              Para (nombre de él)
+            </label>
+            <input
+              type="text"
+              id="input-recipient"
+              maxlength="40"
+              placeholder="Ej. Mi amor, Carlos..."
+              oninput="handleNameInput()"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-white/95 border border-skyAccent/35 text-deepNavy text-sm placeholder:text-slateInk/45 focus:outline-none focus:ring-2 focus:ring-skyAccent/40"
+            />
+          </div>
+
+          <div>
+            <label for="input-sender" class="block text-[11px] font-medium uppercase tracking-wider text-slateInk mb-1">
+              De (tu nombre o firma)
+            </label>
+            <input
+              type="text"
+              id="input-sender"
+              maxlength="40"
+              placeholder="Ej. Sofi, quien te quiere tanto..."
+              oninput="handleNameInput()"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-white/95 border border-skyAccent/35 text-deepNavy text-sm placeholder:text-slateInk/45 focus:outline-none focus:ring-2 focus:ring-skyAccent/40"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Barras de progreso de 5 escenas -->
+      <div
+        id="progress-bars"
+        class="grid grid-cols-5 gap-1.5 sm:gap-2 mt-5 mb-4"
+        role="group"
+        aria-label="Progreso de 5 escenas"
+      >
+        <!-- Generadas dinámicamente -->
+      </div>
+
+      <!-- Selector de 3 estilos de mensaje -->
+      <div class="flex items-center justify-between gap-2 mb-4">
+        <span class="text-[11px] sm:text-xs uppercase tracking-wider text-slateInk font-medium shrink-0">
+          Estilo:
+        </span>
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <button
+            type="button"
+            data-preset="calido"
+            onclick="selectPreset('calido')"
+            class="preset-chip px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition cursor-pointer bg-skyAccent text-white shadow-sm"
+          >
+            Cálido
+          </button>
+          <button
+            type="button"
+            data-preset="profundo"
+            onclick="selectPreset('profundo')"
+            class="preset-chip px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition cursor-pointer bg-white/85 text-slateInk border border-skyAccent/25 hover:text-deepNavy"
+          >
+            Profundo
+          </button>
+          <button
+            type="button"
+            data-preset="dulce"
+            onclick="selectPreset('dulce')"
+            class="preset-chip px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition cursor-pointer bg-white/85 text-slateInk border border-skyAccent/25 hover:text-deepNavy"
+          >
+            Dulce
+          </button>
+        </div>
+      </div>
+
+      <!-- Escenario animado con zonas táctiles izquierda (retroceder) y derecha (avanzar) -->
+      <div
+        id="story-stage"
+        onclick="handleStageTap(event)"
+        class="relative min-h-[290px] sm:min-h-[325px] rounded-2xl bg-gradient-to-b from-[#E1F3FC] via-[#F2F9FD] to-[#FDF6EA] border border-skyAccent/30 p-6 sm:p-8 flex flex-col items-center justify-center text-center cursor-pointer select-none overflow-hidden shadow-inner"
+      >
+        <div class="absolute top-3.5 right-4 text-[11px] font-semibold text-skyAccentHover bg-white/90 px-2.5 py-1 rounded-full border border-skyAccent/25 shadow-xs">
+          <span id="scene-indicator">1 / 5</span>
+        </div>
+
+        <div class="absolute inset-y-0 left-2 flex items-center pointer-events-none opacity-45 text-skyAccentHover text-xl" aria-hidden="true">
+          ‹
+        </div>
+        <div class="absolute inset-y-0 right-2 flex items-center pointer-events-none opacity-45 text-skyAccentHover text-xl" aria-hidden="true">
+          ›
+        </div>
+
+        <div id="scene-display" class="scene-enter max-w-md mx-auto px-2">
+          <!-- Inyectado dinámicamente -->
+        </div>
+
+        <p class="mt-7 text-[11px] text-slateInk/75">
+          Toca a la izquierda para retroceder · A la derecha para avanzar
+        </p>
+      </div>
+
+      <!-- Botones de reproducción y copiado -->
+      <div class="mt-5 flex flex-wrap items-center justify-between gap-2.5">
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="btn-play-toggle"
+            onclick="togglePlayPause()"
+            class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-skyAccent hover:bg-skyAccentHover text-white font-semibold text-xs sm:text-sm shadow-md shadow-skyAccent/25 transition cursor-pointer"
+          >
+            <span id="play-icon" aria-hidden="true">⏸</span>
+            <span id="play-label">Pausar</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="replayStory()"
+            class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-2xl bg-white hover:bg-skyWarmBg text-deepNavy font-medium text-xs sm:text-sm border border-skyAccent/30 transition cursor-pointer"
+          >
+            <span aria-hidden="true">↺</span>
+            <span>Repetir</span>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onclick="copyFullMessage()"
+          class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-warmAmberSoft hover:bg-amber-100/90 text-deepNavy font-semibold text-xs sm:text-sm border border-warmAmber/35 transition cursor-pointer"
+        >
+          <span aria-hidden="true">📋</span>
+          <span>Copiar dedicatoria</span>
+        </button>
+      </div>
+
+      <!-- Texto completo del mensaje -->
+      <div class="mt-5 pt-4 border-t border-skyAccent/20">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-slateInk mb-2">
+          Texto completo del mensaje
+        </p>
+        <blockquote
+          id="full-text-preview"
+          class="font-serif text-lg sm:text-xl leading-relaxed text-deepNavy bg-white/85 rounded-2xl p-4 sm:p-5 border border-skyAccent/25 italic shadow-xs"
+        >
+          <!-- Inyectado dinámicamente -->
+        </blockquote>
+      </div>
+
+      <!-- Aviso interno en pantalla -->
+      <div
+        id="toast-box"
+        role="status"
+        aria-live="polite"
+        class="hidden mt-4 rounded-2xl bg-deepNavy text-white px-4 py-2.5 text-xs sm:text-sm font-medium flex items-center justify-between gap-3 shadow-lg"
+      >
+        <span id="toast-text">Texto copiado.</span>
+        <button
+          type="button"
+          onclick="hideToast()"
+          class="text-skyMist hover:text-white font-bold text-xs px-2 py-0.5 rounded cursor-pointer"
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+
+    <footer class="mt-4 text-center text-xs text-slateInk/85">
+      Feliz Día del Hombre · Con cariño para ti 🩵
+    </footer>
+  </main>
+
+  <script>
+    /**
+     * Estado central de la tarjeta interactiva.
+     */
+    const DEFAULT_RECIPIENT = 'mi amor';
+    const DEFAULT_SENDER = 'quien te quiere tanto';
+
+    const appState = {
+      recipient: DEFAULT_RECIPIENT,
+      sender: DEFAULT_SENDER,
+      preset: 'calido',
+      currentScene: 0,
+      isPlaying: true,
+      progress: 0, // Porcentaje de 0 a 100 para la escena actual
+    };
+
+    const SCENE_DURATION_MS = 5600;
+    const TICK_MS = 50;
+    let timerInterval = null;
+    let toastTimeout = null;
+
+    /**
+     * Capitaliza la primera letra de un texto corto sin alterar el resto.
+     */
+    function capitalizeFirst(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    /**
+     * Genera las 5 escenas y el mensaje completo según el estilo elegido y los nombres.
+     * Mantiene un tono natural, sincero y sin redundancias ni adulación.
+     */
+    function getStoryContent() {
+      const to = appState.recipient.trim() || DEFAULT_RECIPIENT;
+      const from = appState.sender.trim() || DEFAULT_SENDER;
+      const capTo = capitalizeFirst(to);
+
+      const contentByPreset = {
+        calido: {
+          scenes: [
+            {
+              tag: 'Día del Hombre',
+              emoji: '🌤️',
+              title: `¡Feliz Día del Hombre, ${to}!`,
+              text: 'Hoy quería detenerme a celebrarte y decirte lo mucho que me encantas.',
+            },
+            {
+              tag: 'Tu empeño',
+              emoji: '📚',
+              title: 'Admiro lo empeñoso y estudioso que eres',
+              text: 'Se nota el esfuerzo que pones en lo que haces y las ganas de seguir aprendiendo.',
+            },
+            {
+              tag: 'Tu forma de ser',
+              emoji: '💬',
+              title: 'Me encanta tu forma intelectual de pensar y expresarte',
+              text: 'Siempre tienes algo que decir y disfrutar escucharte es de mis cosas favoritas.',
+            },
+            {
+              tag: 'Lo que siento',
+              emoji: '🩵',
+              title: 'Estoy muy enamorada de ti',
+              text: 'Agradezco tanto que me consientas, me apapaches y me des todo tu cariño.',
+            },
+            {
+              tag: 'Para ti',
+              emoji: '✨',
+              title: `Qué bonito compartir mis días contigo. Te amo.`,
+              text: `De ${from}.`,
+            },
+          ],
+          fullText: `¡Feliz Día del Hombre, ${to}! Hoy quería recordarte lo mucho que me encantas. Admiro lo empeñoso y estudioso que eres, y me gusta mucho tu forma intelectual de pensar y expresarte; siempre tienes algo que decir y me encanta escucharte. Estoy muy enamorada de ti y muy agradecida por ser quien me consiente, me apapacha y me da todo su cariño. Te amo. — ${from}`,
+        },
+        profundo: {
+          scenes: [
+            {
+              tag: 'Hoy te celebro',
+              emoji: '🕊️',
+              title: `Feliz Día del Hombre, ${to}.`,
+              text: 'Quería dedicarte un momento sincero para decirte cuánto valoro cómo eres.',
+            },
+            {
+              tag: 'Dedicación',
+              emoji: '📖',
+              title: 'Lo empeñoso y estudioso que eres me inspira',
+              text: 'Valoro mucho tu constancia, tu seriedad y el cuidado que pones en cada paso.',
+            },
+            {
+              tag: 'Conversación',
+              emoji: '💭',
+              title: 'Me encanta cómo piensas y te expresas',
+              text: 'Tienes una forma intelectual muy tuya de ver las cosas, siempre tienes algo que decir y me gusta escucharte.',
+            },
+            {
+              tag: 'Cariño y cuidado',
+              emoji: '🤍',
+              title: 'Estoy muy enamorada de ti',
+              text: 'Me hace muy feliz y me da mucha gratitud que me consientas, me apapaches y me des tu cariño.',
+            },
+            {
+              tag: 'Con cariño',
+              emoji: '🩵',
+              title: `${capTo}, gracias por estar presente. Te amo.`,
+              text: `De ${from}.`,
+            },
+          ],
+          fullText: `Feliz Día del Hombre, ${to}. Quería decirte cuánto valoro la persona que eres. Admiro lo empeñoso y estudioso que eres, y me encanta tu forma intelectual de pensar y expresarte; siempre tienes algo que decir y me gusta mucho escucharte. Estoy muy enamorada de ti y agradecida por ser quien me consiente, me apapacha y me da todo su cariño. Te amo. — ${from}`,
+        },
+        dulce: {
+          scenes: [
+            {
+              tag: 'Un detalle para ti',
+              emoji: '☀️',
+              title: `¡Feliz Día del Hombre, ${to}!`,
+              text: 'Solo quería recordarte lo mucho que me gustas y lo bien que me haces.',
+            },
+            {
+              tag: 'Estudioso y empeñoso',
+              emoji: '✏️',
+              title: 'Qué lindo ver lo empeñoso y estudioso que eres',
+              text: 'Me gusta mucho cómo te dedicas y el interés que pones en lo que te importa.',
+            },
+            {
+              tag: 'Escucharte',
+              emoji: '🎧',
+              title: 'Me fascina tu forma intelectual de expresarte',
+              text: 'Siempre tienes algo que decir y me encanta quedarme escuchándote con calma.',
+            },
+            {
+              tag: 'Apapachos',
+              emoji: '🧸',
+              title: 'Estoy muy enamorada de ti',
+              text: 'Gracias por consentirme, apapacharme y darme todo tu cariño tan bonito.',
+            },
+            {
+              tag: 'Siempre',
+              emoji: '🩵',
+              title: `Pasa un día muy bonito, ${to}. Te amo.`,
+              text: `De ${from}.`,
+            },
+          ],
+          fullText: `¡Feliz Día del Hombre, ${to}! Solo quería decirte que estoy muy enamorada de ti y que me encantas. Admiro lo empeñoso y estudioso que eres, y me gusta mucho tu forma intelectual de pensar y expresarte; siempre tienes algo que decir y me encanta escucharte. Gracias por ser quien me consiente, me apapacha y me da todo su cariño. Te amo. — ${from}`,
+        },
+      };
+
+      return contentByPreset[appState.preset] || contentByPreset.calido;
+    }
+
+    /**
+     * Crea partículas flotantes suaves de fondo en tonos celeste y crema.
+     */
+    function createParticles() {
+      const container = document.getElementById('particles-layer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const symbols = ['✦', '·', '🩵', '✧', '•'];
+      const count = 16;
+
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'particle-dot';
+        el.textContent = symbols[i % symbols.length];
+
+        const leftPercent = (i * 6.3 + (i % 3) * 2.5) % 96;
+        const duration = 12 + (i % 6) * 2.8;
+        const delay = (i % 7) * 1.6;
+        const size = 12 + (i % 4) * 4;
+        const color = i % 2 === 0 ? '#2B8CBE' : '#C88728';
+
+        el.style.left = `${leftPercent}%`;
+        el.style.animationDuration = `${duration}s`;
+        el.style.animationDelay = `-${delay}s`;
+        el.style.fontSize = `${size}px`;
+        el.style.color = color;
+
+        container.appendChild(el);
+      }
+    }
+
+    /**
+     * Construye las 5 barras de progreso superiores.
+     */
+    function buildProgressBars() {
+      const barsContainer = document.getElementById('progress-bars');
+      if (!barsContainer) return;
+      barsContainer.innerHTML = '';
+
+      for (let i = 0; i < 5; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'h-1.5 rounded-full bg-skyAccent/20 overflow-hidden cursor-pointer';
+        wrapper.title = `Ir a la escena ${i + 1}`;
+        wrapper.onclick = (e) => {
+          e.stopPropagation();
+          goToScene(i);
+        };
+
+        const fill = document.createElement('div');
+        fill.id = `progress-fill-${i}`;
+        fill.className = 'h-full bg-gradient-to-r from-skyAccent to-sky-400 rounded-full transition-[width] duration-75 ease-linear';
+        fill.style.width = '0%';
+
+        wrapper.appendChild(fill);
+        barsContainer.appendChild(wrapper);
+      }
+    }
+
+    /**
+     * Actualiza el ancho visual de cada barra de progreso.
+     */
+    function updateProgressBarsUI() {
+      for (let i = 0; i < 5; i++) {
+        const fill = document.getElementById(`progress-fill-${i}`);
+        if (!fill) continue;
+
+        if (i < appState.currentScene) {
+          fill.style.width = '100%';
+        } else if (i === appState.currentScene) {
+          fill.style.width = `${Math.min(100, Math.max(0, appState.progress))}%`;
+        } else {
+          fill.style.width = '0%';
+        }
+      }
+    }
+
+    /**
+     * Renderiza la escena actual, el indicador numérico y el mensaje completo.
+     */
+    function renderCurrentScene() {
+      const content = getStoryContent();
+      const scene = content.scenes[appState.currentScene] || content.scenes[0];
+
+      const display = document.getElementById('scene-display');
+      const indicator = document.getElementById('scene-indicator');
+      const fullPreview = document.getElementById('full-text-preview');
+
+      if (indicator) {
+        indicator.textContent = `${appState.currentScene + 1} / 5`;
+      }
+
+      if (display) {
+        display.classList.remove('scene-enter');
+        void display.offsetWidth;
+        display.innerHTML = `
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-white/90 text-skyAccentHover border border-skyAccent/25 mb-4 shadow-2xs">
+            <span>${scene.emoji}</span>
+            <span>${scene.tag}</span>
+          </div>
+          <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-deepNavy leading-snug">
+            ${scene.title}
+          </h2>
+          <p class="mt-3 text-sm sm:text-base text-slateInk leading-relaxed">
+            ${scene.text}
+          </p>
+        `;
+        display.classList.add('scene-enter');
+      }
+
+      if (fullPreview) {
+        fullPreview.textContent = `“${content.fullText}”`;
+      }
+
+      updateProgressBarsUI();
+    }
+
+    /**
+     * Navega a una escena específica (0 a 4) y reinicia su progreso.
+     */
+    function goToScene(index) {
+      const total = 5;
+      appState.currentScene = ((index % total) + total) % total;
+      appState.progress = 0;
+      renderCurrentScene();
+    }
+
+    /**
+     * Maneja toques en el escenario: izquierda retrocede, derecha avanza.
+     */
+    function handleStageTap(event) {
+      const stage = document.getElementById('story-stage');
+      if (!stage) return;
+
+      const rect = stage.getBoundingClientRect();
+      const clickX = event.clientX - rect.left;
+
+      if (clickX < rect.width * 0.35) {
+        goToScene(appState.currentScene - 1);
+      } else {
+        if (appState.currentScene === 4) {
+          goToScene(0);
+        } else {
+          goToScene(appState.currentScene + 1);
+        }
+      }
+    }
+
+    /**
+     * Alterna entre reproducción automática y pausa.
+     */
+    function togglePlayPause() {
+      appState.isPlaying = !appState.isPlaying;
+      syncPlayButtonUI();
+    }
+
+    function syncPlayButtonUI() {
+      const icon = document.getElementById('play-icon');
+      const label = document.getElementById('play-label');
+      if (!icon || !label) return;
+
+      if (appState.isPlaying) {
+        icon.textContent = '⏸';
+        label.textContent = 'Pausar';
+      } else {
+        icon.textContent = '▶';
+        label.textContent = 'Reproducir';
+      }
+    }
+
+    /**
+     * Reinicia desde la primera escena y activa la reproducción.
+     */
+    function replayStory() {
+      appState.isPlaying = true;
+      syncPlayButtonUI();
+      goToScene(0);
+    }
+
+    /**
+     * Cambia el estilo del mensaje (Cálido, Profundo o Dulce).
+     */
+    function selectPreset(presetName) {
+      appState.preset = presetName;
+
+      document.querySelectorAll('.preset-chip').forEach((btn) => {
+        const isSelected = btn.getAttribute('data-preset') === presetName;
+        if (isSelected) {
+          btn.className = 'preset-chip px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition cursor-pointer bg-skyAccent text-white shadow-sm';
+        } else {
+          btn.className = 'preset-chip px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition cursor-pointer bg-white/85 text-slateInk border border-skyAccent/25 hover:text-deepNavy';
+        }
+      });
+
+      appState.progress = 0;
+      renderCurrentScene();
+    }
+
+    /**
+     * Abre o cierra el panel de personalización de nombres.
+     */
+    function toggleCustomizePanel() {
+      const panel = document.getElementById('customize-panel');
+      const btn = document.getElementById('btn-toggle-customize');
+      if (!panel || !btn) return;
+
+      const willOpen = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden', !willOpen);
+      btn.setAttribute('aria-expanded', String(willOpen));
+    }
+
+    /**
+     * Actualiza en tiempo real los nombres ingresados.
+     */
+    function handleNameInput() {
+      const rec = document.getElementById('input-recipient');
+      const snd = document.getElementById('input-sender');
+
+      appState.recipient = (rec && rec.value.trim()) || DEFAULT_RECIPIENT;
+      appState.sender = (snd && snd.value.trim()) || DEFAULT_SENDER;
+
+      renderCurrentScene();
+    }
+
+    /**
+     * Restablece los nombres a sus valores predeterminados.
+     */
+    function resetNames() {
+      appState.recipient = DEFAULT_RECIPIENT;
+      appState.sender = DEFAULT_SENDER;
+
+      const rec = document.getElementById('input-recipient');
+      const snd = document.getElementById('input-sender');
+      if (rec) rec.value = '';
+      if (snd) snd.value = '';
+
+      renderCurrentScene();
+      showToast('Nombres restablecidos.');
+    }
+
+    /**
+     * Copia el mensaje completo al portapapeles con respaldo compatible.
+     */
+    function copyFullMessage() {
+      const content = getStoryContent();
+      const textToCopy = content.fullText;
+
+      const fallbackCopy = () => {
+        const tempArea = document.createElement('textarea');
+        tempArea.value = textToCopy;
+        tempArea.setAttribute('readonly', '');
+        tempArea.style.position = 'fixed';
+        tempArea.style.left = '-9999px';
+        document.body.appendChild(tempArea);
+        tempArea.select();
+
+        let copied = false;
+        try {
+          copied = document.execCommand('copy');
+        } catch (err) {
+          copied = false;
+        }
+        document.body.removeChild(tempArea);
+
+        if (copied) {
+          showToast('Dedicatoria copiada. Lista para pegar y enviar.');
+        } else {
+          showToast('No se pudo copiar automáticamente; puedes seleccionar el texto de abajo.');
+        }
+      };
+
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(textToCopy).then(
+          () => showToast('Dedicatoria copiada. Lista para pegar y enviar.'),
+          () => fallbackCopy()
+        );
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    /**
+     * Muestra el mensaje de notificación en pantalla sin usar alert().
+     */
+    function showToast(message) {
+      const box = document.getElementById('toast-box');
+      const text = document.getElementById('toast-text');
+      if (!box || !text) return;
+
+      text.textContent = message;
+      box.classList.remove('hidden');
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        hideToast();
+      }, 3600);
+    }
+
+    function hideToast() {
+      const box = document.getElementById('toast-box');
+      if (box) box.classList.add('hidden');
+    }
+
+    /**
+     * Inicia el ciclo automático de avance de escenas.
+     */
+    function startAutoplayLoop() {
+      if (timerInterval) clearInterval(timerInterval);
+      const step = (TICK_MS / SCENE_DURATION_MS) * 100;
+
+      timerInterval = setInterval(() => {
+        if (!appState.isPlaying) return;
+
+        appState.progress += step;
+        if (appState.progress >= 100) {
+          if (appState.currentScene < 4) {
+            appState.currentScene += 1;
+            appState.progress = 0;
+            renderCurrentScene();
+          } else {
+            appState.progress = 100;
+            appState.isPlaying = false;
+            syncPlayButtonUI();
+            updateProgressBarsUI();
+          }
+        } else {
+          updateProgressBarsUI();
+        }
+      }, TICK_MS);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      buildProgressBars();
+      renderCurrentScene();
+      syncPlayButtonUI();
+      startAutoplayLoop();
+    });
+  </script>
+</body>
+</html>
